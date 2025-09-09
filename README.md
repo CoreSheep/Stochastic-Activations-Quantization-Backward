@@ -1,4 +1,4 @@
-# Memory-Efficient Deep Learning: Stochastic Activation Quantization for Backpropagation 🧠⚡
+# Mix-Precision Stochastic Quantization of Activations during Backpropagation 🧠⚡
 
 [![License](https://img.shields.io/badge/License-GPL%20v2-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/Python-3.8%2B-blue.svg)](https://python.org)
@@ -46,59 +46,50 @@ This thesis **pioneers the application of stochastic quantization to saved activ
 - 🏗️ **Scalability**: Train larger models or use bigger batch sizes on existing hardware
 - 📱 **Democratization**: Make advanced AI training accessible on consumer hardware
 
-## 📁 Repository Structure
+## 📁 Thesis Structure
 
 ```
 master_thesis/
-├── thesis_project/deep-sparse-nine/          # Main implementation
-│   ├── src/deep_sparse_nine/                 # Core quantization modules
-│   │   ├── quantized_2bits_stochastic_quant_bucket/  # Stochastic quantization
-│   │   └── quantized_2bits_brevitas_quant/   # Deterministic baseline
-│   ├── tests/                                # Training scripts and experiments
-│   ├── plots/                                # Visualization and plotting tools
-│   └── quantized_checkpoints*/               # Pre-trained model checkpoints
-├── thesis_template/                          # LaTeX thesis document
-├── plots/                                    # Generated figures and results
+├── thesis_template/msc-thesis-template-main/classic/
+│   ├── ClassicThesis.tex                     # Main thesis document
+│   ├── Chapters/                             # Thesis chapters
+│   │   ├── 01-introduction.tex               # Introduction and motivation
+│   │   ├── 02-background.tex                 # Background and related work
+│   │   ├── 03-sota_and_rw.tex               # State-of-the-art review
+│   │   ├── 04-contribution1.tex              # Deterministic quantization framework
+│   │   ├── 05-contribution2.tex              # Stochastic quantization approach
+│   │   ├── 06-contribution3.tex              # Generalization experiments
+│   │   └── 07-discussion.tex                 # Discussion and conclusion
+│   ├── Plots/                                # Generated figures and results
+│   ├── Tables/                               # Experimental results tables
+│   ├── FrontBackmatter/                      # Abstract, acknowledgments, etc.
+│   └── Bibliography.bib                      # References
+├── plots/                                    # Additional visualization materials
 └── README.md                                 # This file
 ```
 
-## 🛠️ Quick Start
+## 🛠️ Implementation Overview
 
-### Prerequisites
-```bash
-pip install torch torchvision brevitas matplotlib numpy
+The thesis presents theoretical foundations and experimental validation of mix-precision stochastic quantization techniques. Key implementation concepts include:
+
+### Deterministic Quantization Framework
+- **Per-bucket scaling** with configurable bucket sizes
+- **Affine uniform quantization** with min-max normalization
+- **Integration with Brevitas** for deterministic nearest rounding
+
+### Stochastic Quantization Approach
+- **Unbiased stochastic rounding** to eliminate systematic bias
+- **Vectorized implementation** for computational efficiency
+- **Mixed-precision capabilities** with probability-controlled bit selection
+
+### Mathematical Formulation
+The stochastic quantization follows the principle:
+```
+E[Q(x)] = x  (unbiased property)
+q_i = clip(k_i + Bernoulli(α_i), q_min, q_max)
 ```
 
-### Basic Usage
-
-**Deterministic Quantization:**
-```python
-from brevitas.nn import QuantIdentity
-
-# 4-bit activation quantization for backpropagation
-quant_layer = QuantIdentity(bit_width=4, return_quant_tensor=False)
-quantized_activations = quant_layer(saved_activations)
-```
-
-**Stochastic Quantization:**
-```python
-from src.deep_sparse_nine.quantized_2bits_stochastic_quant_bucket.functions.optimized_stoch_quant import OptimizedStochQuantIdentity
-
-# 2-bit stochastic with 4-bit mixing
-stoch_quant = OptimizedStochQuantIdentity(
-    base_levels=4,      # 2-bit base
-    bucket=512,         # Bucket size for local scaling
-    use_max=True,       # Max-norm scaling
-    mix_levels=16,      # 4-bit mixing
-    mix_levels_prob=0.3 # 30% mixing probability
-)
-```
-
-### Training Example
-```bash
-cd thesis_project/deep-sparse-nine/tests/
-python train_quantized_2bit_stoch_bucket.py --dataset cifar10 --epochs 50
-```
+Where quantization maintains expected value while reducing variance through per-bucket scaling.
 
 ## 📊 Key Results
 
@@ -120,13 +111,13 @@ The complete thesis document is available in the repository:
 
 ### 📝 Citation Format
 ```bibtex
-@mastersthesis{li2025stochastic,
-  title={Memory-Efficient Deep Learning: Stochastic Activation Quantization for Backpropagation},
+@mastersthesis{li2025mixprecision,
+  title={Mix-Precision Stochastic Quantization of Activations during Backpropagation},
   author={Li, Jiufeng},
   year={2025},
   school={Technical University of Munich},
   type={Master's Thesis},
-  url={https://github.com/yourusername/master_thesis}
+  url={https://github.com/CoreSheep/Stochastic-Activations-Quantization-Backward}
 }
 ```
 
@@ -135,7 +126,7 @@ For a rapid understanding of the work, refer to the presentation materials in `p
 
 ## 🤝 Contributing
 
-This repository contains the research implementation for my master's thesis. While primarily for academic purposes, suggestions and discussions are welcome through GitHub issues.
+This repository contains the thesis documentation for academic research on mix-precision stochastic quantization. For academic discussions and questions about the research, please feel free to open issues or contact the author.
 
 ## 📄 License
 
