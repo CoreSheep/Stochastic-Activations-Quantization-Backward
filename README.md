@@ -136,7 +136,8 @@ This work is licensed under the GNU General Public License v2.0. See [LICENSE](L
 
 - **Brevitas Team** for the excellent quantization framework
 - **PyTorch Community** for the robust deep learning foundation
-- **Technical University of Munich** for research support and resources
+- **Hardware and Articial Intelligence (HAWAII)
+Lab** for research support and resources
 
 ---
 
