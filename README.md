@@ -115,7 +115,7 @@ The complete thesis document is available in the repository:
   title={Mix-Precision Stochastic Quantization of Activations during Backpropagation},
   author={Li, Jiufeng},
   year={2025},
-  school={Technical University of Munich},
+  school={Heidelberg University},
   type={Master's Thesis},
   url={https://github.com/CoreSheep/Stochastic-Activations-Quantization-Backward}
 }
